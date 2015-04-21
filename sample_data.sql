@@ -31,15 +31,15 @@ VALUES(
 	false
 );
 
-INSERT INTO Job(client,location,scheduled,balance,photographer)
+INSERT INTO Job(client,location,scheduled,payed,photographer)
 SELECT (SELECT MAX(client_id) FROM Client WHERE phone ='1234567890') as client
      , 'Gollisano College room 3245' as location
      , '4/20/2015 8:20pm' as scheduled
-     , 12.50 as balance
+     , 10.00 as balance
      , (SELECT MAX(photographer_id) FROM Photographer WHERE phone ='7884567863') as photographer;
 
 INSERT INTO Photo(cost,from_job)
 VALUES (
        12.50,
-       12
+       1
 );

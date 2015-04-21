@@ -1,6 +1,6 @@
 
 CREATE TABLE Photographer(
-       photographer_id SERIAL PRIMARY KEY,
+       photographer_id serial PRIMARY KEY,
        full_name varchar(150),
        address varchar(4000),
        phone char(10),
@@ -8,7 +8,7 @@ CREATE TABLE Photographer(
 );
 
 CREATE TABLE Client(
-       client_id SERIAL PRIMARY KEY,
+       client_id serial PRIMARY KEY,
        full_name varchar(150),
        address varchar(4000),
        phone char(10)
@@ -16,10 +16,10 @@ CREATE TABLE Client(
 
 CREATE TABLE Job(
        job_id serial PRIMARY KEY,
-       client int REFERENCES Client,
+       client int NOT NULL REFERENCES Client,
      location varchar(400),
     scheduled timestamp,
-      balance money,
+        payed money,
  photographer int REFERENCES Photographer
 );
 
@@ -29,8 +29,8 @@ CREATE TABLE EventJob(
 
 CREATE TABLE Photo(
        proof_id serial PRIMARY KEY,
-       expiration timestamp DEFAULT now() + interval '6 months',
-       cost money,
-       is_ordered bool DEFAULT false,
-       from_job int
+       expiration timestamp NOT NULL DEFAULT now() + interval '6 months',
+       cost money NOT NULL,
+       is_ordered bool NOT NULL DEFAULT false,
+       from_job int NOT NULL REFERENCES Photo
 );
