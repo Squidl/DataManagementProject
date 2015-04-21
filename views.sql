@@ -1,12 +1,13 @@
-CREATE VIEW invoicable AS
-SELECT (SELECT SUM(Photo.cost) - Job.payed
-          FROM Photo
-	 WHERE Photo.from_job=Job.job_id
-       ) as balance
-     , Client.full_name AS customer
-     , Client.phone AS contact
-  FROM Job, Client
- WHERE Job.Client=Client.client_id;
+/*CREATE VIEW invoicable AS
+ *SELECT (SELECT SUM(Photo.cost) - Job.payed
+ *          FROM Photo
+ *	 WHERE Photo.from_job=Job.job_id
+ *       ) as balance
+ *     , Client.full_name AS customer
+ *     , Client.phone AS contact
+ *  FROM Job, Client
+ * WHERE Job.Client=Client.client_id;
+ */
 
 CREATE VIEW disposable AS
 SELECT photo.proof_id AS "proof#"
@@ -26,3 +27,4 @@ SELECT
   FROM Package p, PhotoDesc pt, PhotoInPackage pinpt
  WHERE p.package_id = pinpt.package
    AND pinpt.photo = pt.phototype_id
+
