@@ -8,3 +8,5 @@ SELECT (SELECT SUM(Photo.cost) - Job.payed
   FROM Job, Client
  WHERE Job.Client=Client.client_id;
 
+CREATE VIEW disposable AS
+SELECT 
