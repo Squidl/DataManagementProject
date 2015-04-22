@@ -10,21 +10,25 @@
  */
 
 CREATE VIEW disposable AS
-SELECT photo.proof_id AS "proof#"
-     , photo.expiration AS "exp since"
-     , job.scheduled AS "taken on"
+SELECT p.proof_id AS "proof#"
+     , p.expiration AS "exp since"
+     , j.scheduled AS "taken on"
   FROM Photo p, Job j
  WHERE p.from_job=j.job_id
-   AND expiration < now()
+   AND expiration < now();
 
 CREATE VIEW PhotoPackages AS
   WITH PhotoDesc AS (
-       SELECT pt.phototype_id AS phototype_id
-       	    , concat( str "-", pt.photoname, str " (", pt.width, str "'x" ,pt.height , str "')")
+       SELECT pip.package AS package_id
+       	    , concat( '- ',pip.qty,'x ',pt.photoname,' (',pt.width,' in x ',pt.height,' in)') AS photodesc
          FROM PhotoType as pt
+	    , PhotoInPackage as pip
+	WHERE pt.phototype_id = pip.photo
      )
-SELECT 
-  FROM Package p, PhotoDesc pt, PhotoInPackage pinpt
- WHERE p.package_id = pinpt.package
-   AND pinpt.photo = pt.phototype_id
+SELECT p.package_id as "package"
+     , p.description as "description"
+     , string_agg(pt.photodesc, E'\n' ) AS "includes"
+  FROM Package p, PhotoDesc pt
+ WHERE p.package_id = pt.package_id
+ GROUP BY p.package_id;
 

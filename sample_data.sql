@@ -56,22 +56,22 @@ VALUES (
 INSERT INTO PhotoInPackage(package,photo,qty)
 VALUES (
        (SELECT MAX(package_id) FROM Package WHERE description = 'Just the basics'),
-       (SELECT MAX(phototype) FROM PhotoType WHERE photoname = 'Wallet'),
+       (SELECT MAX(phototype_id) FROM PhotoType WHERE photoname = 'Wallet'),
        1
 ),(
        (SELECT MAX(package_id) FROM Package WHERE description = 'Just the basics'),
-       (SELECT MAX(phototype) FROM PhotoType WHERE photoname = 'Small'),
+       (SELECT MAX(phototype_id) FROM PhotoType WHERE photoname = 'Small'),
        1
 );
 
 INSERT INTO PhotoInPackage(package,photo,qty)
 VALUES (
        (SELECT MAX(package_id) FROM Package WHERE description = 'Extra wallet pictures'),
-       (SELECT MAX(phototype) FROM PhotoType WHERE photoname = 'Wallet'),
+       (SELECT MAX(phototype_id) FROM PhotoType WHERE photoname = 'Wallet'),
        3
 ),(
        (SELECT MAX(package_id) FROM Package WHERE description = 'Extra wallet pictures'),
-       (SELECT MAX(phototype) FROM PhotoType WHERE photoname = 'Small'),
+       (SELECT MAX(phototype_id) FROM PhotoType WHERE photoname = 'Small'),
        1
 );
 

@@ -15,6 +15,13 @@ CREATE TABLE Client(
 
 CREATE TYPE JobMode AS ENUM ('Event', 'Portrait');
 
+CREATE TABLE JobType(
+      jobmode JobMode,
+      jobtype varchar(150),
+         cost money,
+      PRIMARY KEY ( jobmode, jobtype )	 
+);
+
 CREATE TABLE Job(
        job_id serial PRIMARY KEY,
       jobmode JobMode NOT NULL,
@@ -27,23 +34,9 @@ CREATE TABLE Job(
     assistant int REFERENCES Photographer,
     finalized bool NOT NULL DEFAULT FALSE,
         CHECK ( NOT finalized OR photographer IS NOT NULL ),
-	CHECK ( NOT finalized OR ( jobmode = 'Portrait' != assistant IS NULL) )
+	CHECK ( NOT finalized OR ( (jobmode = 'Portrait') != assistant IS NULL) )
 );
 
-CREATE TABLE JobType(
-      jobmode JobMode,
-      jobtype varchar(150),
-         cost money,
-      PRIMARY KEY ( jobmode, jobtype )	 
-);
-
-CREATE TABLE Photo(
-      proof_id serial PRIMARY KEY,
-     phototype int NOT NULL REFERENCES PhotoType,
-    expiration timestamp NOT NULL DEFAULT now() + interval '6 months',
-    is_ordered bool NOT NULL DEFAULT false,
-      from_job int NOT NULL REFERENCES Job
-);
 
 CREATE TABLE Package(
     package_id serial PRIMARY KEY,
@@ -59,8 +52,15 @@ CREATE TABLE PhotoType(
 
 CREATE TABLE PhotoInPackage(
        package int NOT NULL REFERENCES Package,
-         photo int NOT NULL REFERENCES Photo,
+         photo int NOT NULL REFERENCES PhotoType,
 	   qty int NOT NULL,
        PRIMARY KEY(package,photo)
 );
 
+CREATE TABLE Photo(
+      proof_id serial PRIMARY KEY,
+     phototype int NOT NULL REFERENCES PhotoType,
+    expiration timestamp NOT NULL DEFAULT now() + interval '6 months',
+    is_ordered bool NOT NULL DEFAULT false,
+      from_job int NOT NULL REFERENCES Job
+);
