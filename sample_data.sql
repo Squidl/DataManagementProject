@@ -31,6 +31,10 @@ VALUES (
 	false
 );
 
+
+/*
+ * Photo Types and Packages
+ */
 INSERT INTO PhotoType(photoname,height,width)
 VALUES (
         'Wallet',
@@ -76,6 +80,29 @@ VALUES (
 );
 
 /*
+ * Event Types
+ */
+
+INSERT INTO JobType(jobmode,jobtype,cost)
+VALUES (
+	'Portrait',
+	'Proffesional',
+	15.00
+),(
+	'Portrait',
+	'Family',
+	35.00
+),(
+	'Event',
+	'Family',
+	45.00
+),(
+	'Event',
+	'Wedding',
+	75.00
+)
+
+/*
  * INSERT INTO Job(client,location,scheduled,payed,photographer)
  * SELECT (SELECT MAX(client_id) FROM Client WHERE phone ='1234567890') as client
  *     , 'Gollisano College room 3245' as location
@@ -83,4 +110,13 @@ VALUES (
  *     , 10.00 as balance
  *     , (SELECT MAX(photographer_id) FROM Photographer WHERE phone ='7884567863') as photographer;
  */
-
+ 
+INSERT INTO Job(jobmode, jobtype, client, location, scheduled, photographer)
+VALUES (
+	'Portrait',
+	'Family',
+	(SELECT MAX(client_id) FROM Client WHERE phone ='1234567890'),
+	'Studio room 3',
+	'4/25/2015 8:20pm',
+	(SELECT MAX(photographer_id) FROM Photographer WHERE phone ='7884567863')
+)

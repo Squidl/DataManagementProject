@@ -32,9 +32,11 @@ CREATE TABLE Job(
     scheduled timestamp NOT NULL,
  photographer int REFERENCES Photographer,
     assistant int REFERENCES Photographer,
-    finalized bool NOT NULL DEFAULT FALSE,
-        CHECK ( NOT finalized OR photographer IS NOT NULL ),
-	CHECK ( NOT finalized OR ( (jobmode = 'Portrait') != assistant IS NULL) )
+       booked bool NOT NULL DEFAULT FALSE,
+    performed bool NOT NULL DEFAULT FALSE,
+        final bool NOT NULL DEFAULT FALSE,
+        CHECK ( NOT booked OR photographer IS NOT NULL ),
+	CHECK ( NOT booked OR ( (jobmode = 'Portrait') != assistant IS NULL) )
 );
 
 
