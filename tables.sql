@@ -49,7 +49,8 @@ CREATE TABLE PhotoType(
   phototype_id serial PRIMARY KEY,
      photoname varchar(150) NOT NULL,
         height numeric NOT NULL,
-         width numeric NOT NULL
+         width numeric NOT NULL,
+	  cost money NOT NULL
 );
 
 CREATE TABLE PhotoInPackage(

@@ -35,19 +35,22 @@ VALUES (
 /*
  * Photo Types and Packages
  */
-INSERT INTO PhotoType(photoname,height,width)
+INSERT INTO PhotoType(photoname,height,width,cost)
 VALUES (
         'Wallet',
         1,
-        1
+        1,
+	4.00
 ),(
 	'Small',
 	4,
-	6
+	6,
+	6.00
 ),(
 	'Large',
 	8,
-	12
+	12,
+	7.00
 );
 
 INSERT INTO Package(description)

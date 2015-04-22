@@ -19,7 +19,8 @@ SELECT p.proof_id AS "proof#"
 
 CREATE VIEW PhotoPackages AS
   WITH PhotoDesc AS (
-       SELECT pip.package AS package_id
+       SELECT pip.package as package_id
+       	    , pip.qty*pt.cost as cost
        	    , concat( '- ',pip.qty,'x ',pt.photoname,' (',pt.width,' in x ',pt.height,' in)') AS photodesc
          FROM PhotoType as pt
 	    , PhotoInPackage as pip
@@ -27,6 +28,7 @@ CREATE VIEW PhotoPackages AS
      )
 SELECT p.package_id as "package"
      , p.description as "description"
+     , SUM(pt.cost) as "cost"
      , string_agg(pt.photodesc, E'\n' ) AS "includes"
   FROM Package p, PhotoDesc pt
  WHERE p.package_id = pt.package_id
