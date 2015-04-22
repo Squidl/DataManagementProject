@@ -100,7 +100,7 @@ VALUES (
 	'Event',
 	'Wedding',
 	75.00
-)
+);
 
 /*
  * INSERT INTO Job(client,location,scheduled,payed,photographer)
@@ -119,4 +119,5 @@ VALUES (
 	'Studio room 3',
 	'4/25/2015 8:20pm',
 	(SELECT MAX(photographer_id) FROM Photographer WHERE phone ='7884567863')
-)
+);
+
