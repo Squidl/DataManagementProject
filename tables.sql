@@ -1,16 +1,16 @@
 CREATE TABLE Photographer(
-       photographer_id serial PRIMARY KEY,
-       full_name varchar(150),
-       address varchar(4000),
-       phone char(10),
-       is_employed bool
+    photographer_id serial PRIMARY KEY,
+          full_name varchar(150) NOT NULL,
+            address varchar(4000) NOT NULL,
+              phone char(10) NOT NULL,
+        is_employed bool NOT NULL
 );
 
 CREATE TABLE Client(
-       client_id serial PRIMARY KEY,
-       full_name varchar(150),
-       address varchar(4000),
-       phone char(10)
+    client_id serial PRIMARY KEY,
+    full_name varchar(150) NOT NULL,
+      address varchar(4000) NOT NULL,
+        phone char(10) NOT NULL
 );
 
 CREATE TYPE JobMode AS ENUM ('Event', 'Portrait');
@@ -18,7 +18,7 @@ CREATE TYPE JobMode AS ENUM ('Event', 'Portrait');
 CREATE TABLE JobType(
       jobmode JobMode,
       jobtype varchar(150),
-         cost money,
+         cost money NOT NULL,
       PRIMARY KEY ( jobmode, jobtype )	 
 );
 
@@ -35,8 +35,8 @@ CREATE TABLE Job(
        booked bool NOT NULL DEFAULT FALSE,
     performed bool NOT NULL DEFAULT FALSE,
         final bool NOT NULL DEFAULT FALSE,
-        CHECK ( NOT booked OR photographer IS NOT NULL ),
-	CHECK ( NOT booked OR ( (jobmode = 'Portrait') != assistant IS NULL) )
+              CHECK ( NOT booked OR photographer IS NOT NULL ),
+	      CHECK ( NOT booked OR ( (jobmode = 'Portrait') != assistant IS NULL) )
 );
 
 
@@ -66,4 +66,18 @@ CREATE TABLE Photo(
     expiration timestamp NOT NULL DEFAULT now() + interval '6 months',
     is_ordered bool NOT NULL DEFAULT false,
       from_job int NOT NULL REFERENCES Job
+);
+
+CREATE TABLE Payment(
+    payment_id serial PRIMARY KEY,
+      apply_to int NOT NULL REFERENCES Job,
+        amount money NOT NULL,
+    refference varchar(150) NOT NULL
+);
+
+CREATE TABLE Credit(
+  from_payment int NOT NULL REFERENCES Payment,
+    to_payment int NOT NULL REFERENCES Payment,
+        amount money NOT NULL,
+       PRIMARY KEY(from_payment,to_payment)
 );
