@@ -21,15 +21,6 @@ VALUES (
         75.00
 );
 
-/*
- * INSERT INTO Job(client,location,scheduled,payed,photographer)
- * SELECT (SELECT MAX(client_id) FROM Client WHERE phone ='1234567890') as client
- *     , 'Gollisano College room 3245' as location
- *     , '4/20/2015 8:20pm' as scheduled
- *     , 10.00 as balance
- *     , (SELECT MAX(photographer_id) FROM Photographer WHERE phone ='7884567863') as photographer;
- */
-
 INSERT INTO Job(jobmode, jobtype, client, location, scheduled, photographer)
 VALUES (
         'Portrait',

@@ -4,9 +4,11 @@
 
 SELECT *
   FROM Photographer
- WHERE full_name LIKE '%John%';
+ WHERE full_name LIKE '%Clara%';
 
-SELECT *
+SELECT j.job_id as job_id
+     , j.client as client
+     , j.scheduled as scheduled
   FROM Job j
  WHERE NOT EXISTS(
        SELECT 1
