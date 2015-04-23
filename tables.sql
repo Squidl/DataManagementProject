@@ -74,10 +74,3 @@ CREATE TABLE Payment(
         amount money NOT NULL,
     refference varchar(150) NOT NULL
 );
-
-CREATE TABLE Credit(
-  from_payment int NOT NULL REFERENCES Payment,
-    to_payment int NOT NULL REFERENCES Payment,
-        amount money NOT NULL,
-       PRIMARY KEY(from_payment,to_payment)
-);

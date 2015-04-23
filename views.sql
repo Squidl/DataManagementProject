@@ -1,15 +1,28 @@
-/*CREATE VIEW invoicable AS
- *SELECT (SELECT SUM(Photo.cost) - Job.payed
- *          FROM Photo
- *	 WHERE Photo.from_job=Job.job_id
- *       ) as balance
- *     , Client.full_name AS customer
- *     , Client.phone AS contact
- *  FROM Job, Client
- * WHERE Job.Client=Client.client_id;
- */
+CREATE VIEW JobBalance AS
+  WITH photos AS(
+       SELECT p.proof_id
+            , p.from_job
+	    , pt.cost
+         FROM Photo p
+	    , PhotoType pt
+	WHERE p.phototype=pt.phototype_id
+	  AND p.is_ordered
+     )
+SELECT j.job_id
+     , cl.full_name
+     , SUM(pmt.amount) as payed
+     , SUM(ph.cost) as photocost
+     , jt.cost as flatcost
+     , SUM(pmt.amount) - SUM(ph.cost) - jt.cost as balance
+  FROM Job j
+ INNER JOIN JobType jt ON j.jobmode = jt.jobmode AND j.jobtype = jt.jobtype
+ INNER JOIN Client cl ON j.client = cl.client_id
+  LEFT JOIN Payment pmt ON pmt.apply_to=j.job_id
+  LEFT JOIN photos ph ON ph.from_job=j.job_id
+ GROUP BY j.job_id
 
-CREATE VIEW disposable AS
+
+CREATE VIEW Disposable AS
 SELECT p.proof_id AS "proof#"
      , p.expiration AS "exp since"
      , j.scheduled AS "taken on"
