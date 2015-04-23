@@ -34,6 +34,7 @@ CREATE TABLE Job(
     assistant int REFERENCES Photographer,
        booked bool NOT NULL DEFAULT FALSE,
     performed bool NOT NULL DEFAULT FALSE,
+     canceled bool NOT NULL DEFAULT FALSE,
         final bool NOT NULL DEFAULT FALSE,
               CHECK ( NOT booked OR photographer IS NOT NULL ),
 	      CHECK ( NOT booked OR ( (jobmode = 'Portrait') != assistant IS NULL) )
