@@ -32,25 +32,6 @@ SELECT j.job_id
   LEFT JOIN JobType jt
     ON j.jobmode = jt.jobmode AND j.jobtype = jt.jobtype;
 
-/*
-SELECT j.job_id
-     , cl.client_id as client_id
-     , cl.full_name as client
-     , COALESCE( (
-       SELECT SUM(p.amount)
-         FROM Payment p
-	WHERE p.appy_to = j.job_id 
-     ),cast(0.00 as money))
-     , COALESCE(SUM(ph.cost),cast(0.00 as money)) as photocost
-     , jt.cost as flatcost
-     , COALESCE(SUM(pmt.amount),cast(0.00 as money)) - COALESCE(SUM(ph.cost),cast(0.00 as money)) - jt.cost as balance
-  FROM Job j
- INNER JOIN JobType jt ON j.jobmode = jt.jobmode AND j.jobtype = jt.jobtype
- INNER JOIN Client cl ON j.client = cl.client_id
-  LEFT JOIN photos ph ON ph.from_job=j.job_id
- GROUP BY j.job_id,cl.client_id,jt.jobmode,jt.jobtype;
-*/
-
 CREATE VIEW Disposable AS
 SELECT p.proof_id AS "proof#"
      , p.expiration AS "exp since"

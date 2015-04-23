@@ -1,0 +1,34 @@
+NOTICE:  drop cascades to 2 other objects
+DETAIL:  drop cascades to constraint job_photographer_fkey on table job
+drop cascades to constraint job_assistant_fkey on table job
+NOTICE:  drop cascades to constraint job_client_fkey on table job
+NOTICE:  drop cascades to 4 other objects
+DETAIL:  drop cascades to constraint photo_from_job_fkey on table photo
+drop cascades to constraint payment_apply_to_fkey on table payment
+drop cascades to view jobbalance
+drop cascades to view disposable
+NOTICE:  drop cascades to view jobowed
+NOTICE:  drop cascades to 2 other objects
+DETAIL:  drop cascades to constraint photoinpackage_package_fkey on table photoinpackage
+drop cascades to view photopackages
+NOTICE:  drop cascades to constraint photoinpackage_photo_fkey on table photoinpackage
+NOTICE:  drop cascades to view jobpayed
+NOTICE:  CREATE TABLE will create implicit sequence "photographer_photographer_id_seq" for serial column "photographer.photographer_id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "photographer_pkey" for table "photographer"
+NOTICE:  CREATE TABLE will create implicit sequence "client_client_id_seq" for serial column "client.client_id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "client_pkey" for table "client"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "jobtype_pkey" for table "jobtype"
+NOTICE:  CREATE TABLE will create implicit sequence "package_package_id_seq" for serial column "package.package_id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "package_pkey" for table "package"
+NOTICE:  CREATE TABLE will create implicit sequence "phototype_phototype_id_seq" for serial column "phototype.phototype_id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "phototype_pkey" for table "phototype"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "photoinpackage_pkey" for table "photoinpackage"
+NOTICE:  CREATE TABLE will create implicit sequence "job_job_id_seq" for serial column "job.job_id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "job_pkey" for table "job"
+NOTICE:  CREATE TABLE will create implicit sequence "photo_proof_id_seq" for serial column "photo.proof_id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "photo_pkey" for table "photo"
+NOTICE:  CREATE TABLE will create implicit sequence "payment_payment_id_seq" for serial column "payment.payment_id"
+NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "payment_pkey" for table "payment"
+ERROR:  syntax error at or near ")"
+LINE 9:             ELSE 'Freelance' ) as relationship
+                                     ^

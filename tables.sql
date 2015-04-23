@@ -72,18 +72,21 @@ CREATE TABLE Photo(
 CREATE OR REPLACE FUNCTION chaincancel() RETURNS TRIGGER AS
 $BODY$
 BEGIN
-    UPDATE Photo p
-       SET p.expired = now()
-     WHERE p.from_job = new.job_id
+    UPDATE Photo
+       SET expiration = now()
+         , is_ordered = false
+     WHERE from_job = NEW.job_id;
+
+     RETURN NEW;
 END;
 $BODY$
 language plpgsql;
 
- CREATE TRIGGER PhotoDiscard AFTER UPDATE 
-     ON Job
+ CREATE TRIGGER PhotoDiscard
+  AFTER UPDATE ON Job
     FOR EACH ROW
-   WHEN new.cancelled and not old.cancelled
-EXECUTE PROCEDURE chaincancel()
+   WHEN (NEW.cancelled and not OLD.cancelled)
+EXECUTE PROCEDURE chaincancel();
  
 
 CREATE TABLE Payment(
