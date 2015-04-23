@@ -22,25 +22,6 @@ CREATE TABLE JobType(
       PRIMARY KEY ( jobmode, jobtype )	 
 );
 
-CREATE TABLE Job(
-       job_id serial PRIMARY KEY,
-      jobmode JobMode NOT NULL,
-      jobtype varchar(150) NOT NULL,
-      FOREIGN KEY (jobmode, jobtype) REFERENCES JobType (jobmode, jobtype),	 
-       client int NOT NULL REFERENCES Client,
-     location varchar(400) NOT NULL,
-    scheduled timestamp NOT NULL,
- photographer int REFERENCES Photographer,
-    assistant int REFERENCES Photographer,
-       booked bool NOT NULL DEFAULT FALSE,
-    performed bool NOT NULL DEFAULT FALSE,
-     canceled bool NOT NULL DEFAULT FALSE,
-        final bool NOT NULL DEFAULT FALSE,
-              CHECK ( NOT booked OR photographer IS NOT NULL ),
-	      CHECK ( NOT booked OR ( (jobmode = 'Portrait') != assistant IS NULL) )
-);
-
-
 CREATE TABLE Package(
     package_id serial PRIMARY KEY,
    description varchar(4000) NOT NULL
@@ -61,6 +42,25 @@ CREATE TABLE PhotoInPackage(
        PRIMARY KEY(package,photo)
 );
 
+CREATE TABLE Job(
+       job_id serial PRIMARY KEY,
+      jobmode JobMode NOT NULL,
+      jobtype varchar(150) NOT NULL,
+      FOREIGN KEY (jobmode, jobtype) REFERENCES JobType (jobmode, jobtype),
+      package int REFERENCES Package,	 
+       client int NOT NULL REFERENCES Client,
+     location varchar(400) NOT NULL,
+    scheduled timestamp NOT NULL,
+ photographer int REFERENCES Photographer,
+    assistant int REFERENCES Photographer,
+       booked bool NOT NULL DEFAULT FALSE,
+    performed bool NOT NULL DEFAULT FALSE,
+    cancelled bool NOT NULL DEFAULT FALSE,
+        final bool NOT NULL DEFAULT FALSE,
+              CHECK ( NOT booked OR photographer IS NOT NULL ),
+	      CHECK ( NOT booked OR ( (jobmode = 'Portrait') != assistant IS NULL) )
+);
+
 CREATE TABLE Photo(
       proof_id serial PRIMARY KEY,
      phototype int NOT NULL REFERENCES PhotoType,
@@ -68,6 +68,23 @@ CREATE TABLE Photo(
     is_ordered bool NOT NULL DEFAULT false,
       from_job int NOT NULL REFERENCES Job
 );
+
+CREATE OR REPLACE FUNCTION chaincancel() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE Photo p
+       SET p.expired = now()
+     WHERE p.from_job = new.job_id
+END;
+$BODY$
+language plpgsql;
+
+ CREATE TRIGGER PhotoDiscard AFTER UPDATE 
+     ON Job
+    FOR EACH ROW
+   WHEN new.cancelled and not old.cancelled
+EXECUTE PROCEDURE chaincancel()
+ 
 
 CREATE TABLE Payment(
     payment_id serial PRIMARY KEY,
