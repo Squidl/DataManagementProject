@@ -1,37 +1,157 @@
 INSERT INTO Photo(phototype, from_job, is_ordered)
 VALUES (
        1,
-       2,
+       5,
        false
 ),(
+       1,
+       5,
+       false
+),(
+       1,
+       5,
+       true
+),(
        2,
-       2,
+       5,
        false
 ),(
        3,
-       2,
+       5,
+       false
+),(
+       4,
+       5,
+       false
+),(
+       4,
+       5,
        true
 ),(
        4,
-       2,
+       5,
+       false
+),(
+       5,
+       5,
+       false
+),(
+       5,
+       5,
+       true
+),(
+       6,
+       5,
+       false
+),(
+       6,
+       5,
+       false
+),(
+       6,
+       5,
+       false
+),(
+       6,
+       5,
+       true
+),(
+       7,
+       5,
+       false
+),(
+       8,
+       5,
+       true
+),(
+       8,
+       5,
+       false
+),(
+       8,
+       5,
+       true
+),(
+       9,
+       5,
        false
 );
 
 INSERT INTO Photo(phototype, from_job, is_ordered)
 VALUES (
        1,
-       3,
+       6,
+       false
+),(
+       1,
+       6,
        false
 ),(
        2,
-       3,
+       6,
        true
 ),(
-       1,
        3,
+       6,
+       false
+),(
+       3,
+       6,
+       false
+),(
+       3,
+       6,
+       false
+),(
+       4,
+       6,
        true
 ),(
        4,
-       3,
+       6,
+       false
+),(
+       4,
+       6,
+       false
+),(
+       5,
+       6,
+       true
+),(
+       5,
+       6,
+       false
+),(
+       6,
+       6,
+       false
+),(
+       6,
+       6,
+       false
+),(
+       6,
+       6,
+       true
+),(
+       7,
+       6,
+       false
+),(
+       8,
+       6,
+       true
+),(
+       8,
+       6,
+       false
+),(
+       8,
+       6,
+       true
+),(
+       9,
+       6,
        false
 );
